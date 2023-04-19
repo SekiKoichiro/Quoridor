@@ -11,8 +11,11 @@ public class CreateBlock : MonoBehaviour
     [SerializeField]
     private GameObject Block,Guide,TateIs,YokoIs;
     [SerializeField]
+    WoodCountManagement Wood;
+    [SerializeField]
     private Transform parent;
-
+    [SerializeField]
+    private WoodIndicator WoodIndicator;
     // Update is called once per frame
     void Update()
     {
@@ -39,17 +42,30 @@ public class CreateBlock : MonoBehaviour
         //ガイドの位置変更
         Guide.GetComponent<GuidePositionSetting>().SetGuidePosition(BlockPosition);
     }
-    
+    //Block作成
     private void InstanceBlockYoko()
     {
-        GameObject obj = Instantiate(Block, BlockPosition, Quaternion.identity, parent);
-        obj.name = "BlockA";
+        //プロパティの使い方合っているか?
+        if ( Wood.WoodNum >= 10)
+        {
+            GameObject obj = Instantiate(Block, BlockPosition, Quaternion.identity, parent);
+            obj.name = "BlockA";
+            Wood.WoodNum -= 10;//木材減らす
+            WoodIndicator.SetNum(Wood.WoodNum);//UIの木材の表示を変更する
+        }
+
     }
 
     private void InstanceBlockTate()
     {
-        GameObject obj = Instantiate(Block, BlockPosition, Quaternion.Euler(0, 90, 0), parent);
-        obj.name = "BlockA";
+        //プロパティの使い方合っているか?
+        if (Wood.WoodNum >= 10)
+        {
+            GameObject obj = Instantiate(Block, BlockPosition, Quaternion.Euler(0, 90, 0), parent);
+            obj.name = "BlockA";
+            Wood.WoodNum -= 10;
+            WoodIndicator.SetNum(Wood.WoodNum);//UIの木材の表示を変更する
+        }
     }
 
 }
