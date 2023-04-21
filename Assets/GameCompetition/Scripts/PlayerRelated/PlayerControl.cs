@@ -1,11 +1,11 @@
 //Playerをキー入力で移動させる
 using UnityEngine;
-using System;
-public class PlayerControl : MonoBehaviour
+using Photon.Pun;
+public class PlayerControl : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float force;
     private Rigidbody rb;
-    private bool SpeedIs;
+    private bool isSpeed;
     void Start()
     {
         
@@ -15,7 +15,8 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (rb.velocity.magnitude < 1)
+        //自分が生成したオブジェクトのみに移動処理実施する
+        if (rb.velocity.magnitude < 1 && photonView.IsMine )
         {
             if (Input.GetKey(KeyCode.D)) MoveRight();
             if (Input.GetKey(KeyCode.A)) MoveLeft();
